@@ -26,7 +26,7 @@ pipeline {
         //         SONAR_URL = ""
         //     }
         //     steps{
-        //         withCredentials([usernamePassword(clientID: "sonarQube", variable = "SONAR_AUTH_TOKEN")]){
+        //         withCredentials([string(clientID: "sonarQube", variable = "SONAR_AUTH_TOKEN")]){
         //             sh 'cd spring-boot-app && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL} -Dsonar.qualitygate.wait=true -Dsonar.qualitygate.timeout=300'
         //         }
         //     }
@@ -57,10 +57,10 @@ pipeline {
                             git config user.email "ghoshsoumojit53@gmail.com"
                             git config user.name "Soumojit Ghosh"
                             BUILD_NUMBER=${BUILD_NUMBER}
-                            sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" spring-boot-app/deployment.yml
-                            git add spring-boot-app/deployment.yml
+                            sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" deployment.yml
+                            git add deployment.yml
                             git commit -m "Update deployment image to version ${BUILD_NUMBER}"
-                            git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
+                            git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:master
                         '''
                     }
                 }
